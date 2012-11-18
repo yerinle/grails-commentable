@@ -16,7 +16,7 @@ package org.grails.comments
 
 import grails.test.*
 
-class CommentableTests extends GrailsUnitTestCase {
+class CommentableTests extends GroovyTestCase {
     protected void setUp() {
         super.setUp()
     }
