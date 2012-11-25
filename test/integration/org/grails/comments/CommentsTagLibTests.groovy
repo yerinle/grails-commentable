@@ -1,6 +1,8 @@
 package org.grails.comments
 
 import grails.test.*
+import grails.test.mixin.web.GroovyPageUnitTestMixin
+import org.junit.Ignore
 
 class CommentsTagLibTests extends GroovyPagesTestCase {
     protected void setUp() {
@@ -15,16 +17,16 @@ class CommentsTagLibTests extends GroovyPagesTestCase {
 
 		def poster = new TestPoster(name:"fred")
 		poster.save()
-		
+
 		def entry = new TestEntry(title:"The Entry")
 		shouldFail(CommentException) {
-			entry.addComment(poster, "My comment")			
+			entry.addComment(poster, "My comment")
 		}
 
 		entry.save()
-		
+
 		entry.addComment poster, "one."
-		entry.addComment poster, "two."		
+		entry.addComment poster, "two."
 		
 		def template = '<comments:each bean="${bean}">${comment.body}</comments:each>'
 		
@@ -37,20 +39,35 @@ class CommentsTagLibTests extends GroovyPagesTestCase {
 
 
 	void testEachRecent() {
-		def poster = new TestPoster(name:"fred")
-		poster.save()
-		
-		def entry = new TestEntry(title:"The Entry")
-		shouldFail(CommentException) {
-			entry.addComment(poster, "My comment")			
-		}
+        def poster = new TestPoster(name: "fred")
+        poster.save()
+        def entry = new TestEntry(title: "The Entry")
+        shouldFail(CommentException) {
+            entry.addComment(poster, "My comment")
+        }
+        entry.save()
+        entry.addComment poster, "one."
+        entry.addComment poster, "two."
 
-		entry.save()
-		
-		entry.addComment poster, "one."
-		entry.addComment poster, "two."	
-		
-		def template = '<comments:eachRecent domain="${domain}">${comment.body}</comments:eachRecent>'			
-		assertOutputEquals "two.one.", template, [domain:TestEntry]		
-	}
+        def template = '<comments:eachRecent domain="${domain}">${comment.body}</comments:eachRecent>'
+        assertOutputEquals "two.one.", template, [domain:TestEntry]
+    }
+
+    @Ignore
+    void testRender() {
+        def poster = new TestPoster(name: "fred")
+        poster.save()
+        def entry = new TestEntry(title: "The Entry")
+        shouldFail(CommentException) {
+            entry.addComment(poster, "My comment")
+        }
+        entry.save()
+        entry.addComment poster, "one."
+        entry.addComment poster, "two."
+
+        def template = '<comments:render bean="${domain}" />'
+        assertOutputEquals "two.one.", template, [domain:TestEntry]
+    }
+
+
 }
