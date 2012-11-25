@@ -48,7 +48,7 @@ class CommentsTagLib {
 			noEscape = true
 		}
 		if(bean?.metaClass?.hasProperty(bean, "comments")) {
-			out << g.render(template:"/commentable/comments", plugin:"commentable", model:[commentable:bean, noEscape:noEscape])
+			out << g.render(template:"/commentable/comments", plugin:"commenter", model:[commentable:bean, noEscape:noEscape])
 		}		
 	}
 

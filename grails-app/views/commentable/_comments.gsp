@@ -3,24 +3,21 @@
 	<g:render template="/commentable/comment" 
 			  collection="${comments}" 
 			  var="comment" 
-			  plugin="commentable" 
+			  plugin="commenter"
 			  model="[noEscape:noEscape]" />
 </div>
 <div id="addComment" class="addComment">
 	<h2 class="addCommentTitle">
-		<a href="#commentEditor" onclick="document.getElementById('addCommentContainer').style.display='';">
+		<a href="#commentEditor" onclick="show_comment_container()">
 			<g:message code="comment.add.title" default="Post a Comment"></g:message>
 		</a>
 	</h2>
-	<div id="addCommentContainer" class="addCommentContainer" style="display:none;">
+	<div id="addCommentContainer" class="addCommentContainer">
 		<div class="addCommentDescription">
 			<g:message code="comment.add.description" default=""></g:message>
 		</div>
 		<a name="commentEditor"></a>
-		<g:formRemote name="addCommentForm" url="[controller:'commentable',action:'add']" update="comments">
-			<plugin:isAvailable name="grails-ui">
-				<gui:richEditor id='commentBody' name="comment.body" value='' width="100%" />
-			</plugin:isAvailable>
+		<g:formRemote name="addCommentForm" url="[controller:'commentable',action:'add']" update="comments" after="post_comment()">
 			<plugin:isNotAvailable name="grails-ui">
 				<g:textArea id="commentBody" name="comment.body" /> <br />
 			</plugin:isNotAvailable>
@@ -33,3 +30,23 @@
 		</g:formRemote>
 	</div>
 </div>
+
+
+<g:javascript>
+
+    $(function() {
+        post_comment();
+    });
+
+    function post_comment() {
+        $('#addCommentContainer').hide();
+    }
+
+
+    function show_comment_container() {
+        $('#commentBody').attr({value: ''})
+        $('#addCommentContainer').show();
+    }
+
+
+</g:javascript>
