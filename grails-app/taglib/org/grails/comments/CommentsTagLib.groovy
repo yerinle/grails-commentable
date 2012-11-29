@@ -14,9 +14,17 @@
  */
 package org.grails.comments
 
+import grails.util.GrailsNameUtils
+
 class CommentsTagLib {
 
 	static namespace = "comments"
+
+    def resources = { attrs ->
+        out << """
+        <script type=\"text/javascript\" src=\"${resource(dir: pluginContextPath + '/js', file: 'comment_rating.js')}\"></script>
+        """
+    }
 	
 	def each =  { attrs, body ->
 		def bean = attrs.bean
@@ -43,13 +51,11 @@ class CommentsTagLib {
 	def render =  { attrs, body ->
 		def bean = attrs.bean
 		def noEscape = attrs.containsKey('noEscape') ? attrs.noEscape : false
-		
-		plugin.isAvailable(name:"grails-ui") {
-			noEscape = true
-		}
-		if(bean?.metaClass?.hasProperty(bean, "comments")) {
-			out << g.render(template:"/commentable/comments", plugin:"commenter", model:[commentable:bean, noEscape:noEscape])
-		}		
+        def type = GrailsNameUtils.getPropertyName(bean.class)
+
+        if(bean?.metaClass?.hasProperty(bean, "comments")) {
+            out << g.render(template:"/commentable/comments", plugin:"commenter", model:[commentable:bean, noEscape:noEscape, id:'star', type: type])
+        }
 	}
 
 }
