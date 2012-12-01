@@ -1,0 +1,5 @@
+#star_comment_rating > .star {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+}

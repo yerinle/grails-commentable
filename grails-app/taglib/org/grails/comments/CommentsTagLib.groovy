@@ -18,44 +18,45 @@ import grails.util.GrailsNameUtils
 
 class CommentsTagLib {
 
-	static namespace = "comments"
+    static namespace = "comments"
 
     def resources = { attrs ->
         out << """
         <script type=\"text/javascript\" src=\"${resource(dir: pluginContextPath + '/js', file: 'comment_rating.js')}\"></script>
+        <link rel=\"stylesheet\" href=\"${createLinkTo(dir: pluginContextPath + '/css', file: 'comment_rating.css')}\" />
         """
     }
-	
-	def each =  { attrs, body ->
-		def bean = attrs.bean
-		def varName = attrs.var ?: "comment"
-		if(bean?.metaClass?.hasProperty(bean, "comments")) {
-			bean.comments?.each {
-				out << body((varName):it)
-			}
-		}
-	}
-	
-	def eachRecent = { attrs, body ->
-		def domain = attrs.domain
-		if(!domain && attrs.bean) domain = attrs.bean?.class
-		def varName = attrs.var ?: "comment"
-				
-		if(domain) {
-			domain.recentComments?.each {
-				out << body((varName):it)				
-			}
-		}
-	}
-	
-	def render =  { attrs, body ->
-		def bean = attrs.bean
-		def noEscape = attrs.containsKey('noEscape') ? attrs.noEscape : false
+
+    def each = { attrs, body ->
+        def bean = attrs.bean
+        def varName = attrs.var ?: "comment"
+        if (bean?.metaClass?.hasProperty(bean, "comments")) {
+            bean.comments?.each {
+                out << body((varName): it)
+            }
+        }
+    }
+
+    def eachRecent = { attrs, body ->
+        def domain = attrs.domain
+        if (!domain && attrs.bean) domain = attrs.bean?.class
+        def varName = attrs.var ?: "comment"
+
+        if (domain) {
+            domain.recentComments?.each {
+                out << body((varName): it)
+            }
+        }
+    }
+
+    def render = { attrs, body ->
+        def bean = attrs.bean
+        def noEscape = attrs.containsKey('noEscape') ? attrs.noEscape : false
         def type = GrailsNameUtils.getPropertyName(bean.class)
 
-        if(bean?.metaClass?.hasProperty(bean, "comments")) {
-            out << g.render(template:"/commentable/comments", plugin:"commenter", model:[commentable:bean, noEscape:noEscape, id:'star', type: type])
+        if (bean?.metaClass?.hasProperty(bean, "comments")) {
+            out << g.render(template: "/commentable/comments", plugin: "commenter", model: [commentable: bean, noEscape: noEscape, id: 'star', type: type])
         }
-	}
+    }
 
 }
