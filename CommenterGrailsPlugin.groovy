@@ -41,8 +41,6 @@ then use the tag library and partial templates to integrate comments into your v
 	def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPCOMMENTABLE" ]
 	def scm = [ url: "https://github.com/gpc/grails-commentable" ]
 
-    def dependsOn = [ jquery : "1.7.1"]
-
 	def doWithSpring = {
 		def config = application.config
 		
