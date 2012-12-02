@@ -36,30 +36,22 @@ $.fn.org.grails.plugin.commenter = {
         var curRateable = $.fn.org.grails.plugin.commenter.rateables[index]
         var id = curRateable.id
         var form = $("#" + id + "_form")
-        form.css("display", "none")
-        //YAHOO.util.Dom.setStyle(form, 'display', 'none') // Hide the form
+        form.css("display", "none") // Hide the form
 
         // Create the div that will contain the stars
-//        var stardiv = document.createElement('div')
         var stardiv = $('<div>')
         stardiv.addClass('star')
-//        YAHOO.util.Dom.addClass(stardiv, 'star')
 
         // make the stars
         for (var i=1; i<=5; i++) {
             // first, make a div and then an a-element in it
-//            var star = document.createElement('span')
             var star = $('<span>')
             star.attr("id", id + '_star_' + i)
             star.html('&#9734;')
             star.appendTo(stardiv)
 
             // add needed listeners to the star
-//            YAHOO.util.Event.addListener(star, 'mouseover', YAHOO.org.grails.plugin.commenter.hover_star)
-//            YAHOO.util.Event.addListener(star, 'mouseout', YAHOO.org.grails.plugin.commenter.reset_stars, index)
-//            YAHOO.util.Event.addListener(star, 'click', YAHOO.org.grails.plugin.commenter.submit_rating, index)
             star.bind('click', index, $.fn.org.grails.plugin.commenter.submit_rating)
-//            star.bind('click', $.fn.org.grails.plugin.commenter.submit_rating(index))
         }
 
         var ratingDiv = $("#" + id + "_comment_rating")
@@ -79,8 +71,6 @@ $.fn.org.grails.plugin.commenter = {
         for (var i=1; i<=which_star; i++) {
             var star = $("#" + id + '_star_' + i)
             var a = star.firstChild
-//            YAHOO.util.Dom.addClass(star, 'active')
-//            YAHOO.util.Dom.setStyle(a, 'width', '100%')
             star.addClass('active')
 
         }
@@ -115,12 +105,6 @@ $.fn.org.grails.plugin.commenter = {
         for (var i=1; i<=5; i++) {
             var star = $("#" + rating.id + '_star_' + i)
             if(star!=null) {
-//                var a = star.firstChild
-
-                // first, reset all stars
-//                YAHOO.util.Dom.removeClass(star, 'active')
-//                YAHOO.util.Dom.removeClass(star, 'on')
-
                 star.removeClass('active')
                 star.removeClass('on')
 
@@ -128,10 +112,6 @@ $.fn.org.grails.plugin.commenter = {
                 if (i >= stars_on && stars_on != 0 && !star.hasClass('active')) {
                     star.addClass('active')
                 }
-
-                // and for the last one, set width if needed
-//                if (i == stars_on)
-//                    YAHOO.util.Dom.setStyle(a, 'width', last_star_width)
             }
         }
     },
@@ -162,15 +142,6 @@ $.fn.org.grails.plugin.commenter = {
             select.attr('value', num) // Set the right form element to the value to be submitted
 
             $.post(post_to , { rating: num}, $.fn.org.grails.plugin.commenter.ajax_callback.success)
-
-//
-//            YAHOO.util.Connect.setForm(form)
-//            var callback = {
-//                success: YAHOO.org.grails.plugin.commenter.ajax_callback.success,
-//                failure: YAHOO.org.grails.plugin.commenter.ajax_callback.failure,
-//                argument: {index: index} // We need to keep track of which rateable has been submitted.
-//            }
-//            var c = YAHOO.util.Connect.asyncRequest('POST', post_to + '?xhr=True', callback)
         }
     },
 
@@ -180,12 +151,6 @@ $.fn.org.grails.plugin.commenter = {
 
             // release the form to normal status and change the statustext
             rating.submitted = false
-//            var avg = o.responseText.split(',')[0]
-//            var total = o.responseText.split(',')[1]
-//            YAHOO.util.Dom.get(rating.id + "_notifytext").innerHTML = 'Rating saved. (' + total + ' Ratings)'
-//            rating.average = avg
-//
-//            YAHOO.util.Dom.get(rating.id + "_form").elements[0].value = avg
             $.fn.org.grails.plugin.commenter.reset_stars(null, 0)
 
             $.fn.org.grails.plugin.commenter.update_rater(o)
@@ -201,12 +166,6 @@ $.fn.org.grails.plugin.commenter = {
 
         // release the form to normal status and change the statustext
         rating.submitted = false
-//        var avg = o.responseText.split(',')[0]
-//        var total = o.responseText.split(',')[1]
-//        YAHOO.util.Dom.get(rating.id + "_notifytext").innerHTML = 'Rating saved. (' + total + ' Ratings)'
-//        rating.average = avg
-//
-//        YAHOO.util.Dom.get(rating.id + "_form").elements[0].value = avg
         YAHOO.org.grails.plugin.rater.reset_stars(null, 0)
     }
 };

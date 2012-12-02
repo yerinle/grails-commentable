@@ -22,8 +22,6 @@
         </div>
         <a name="commentEditor"></a>
 
-
-        %{--url="[controller: 'rateable', action: 'rate', id: commentable.id, params: [type: type]]" title="${average}">--}%
         <div id="${id}_comment_rating" class="star_comment_rating">
             <g:formRemote name="${id}_form" class="star_rating"
                       url="[controller: 'rateable', action: 'rate', id: commentable.id, params: [type: type]]" title="${average}">
@@ -40,8 +38,9 @@
         </div>
 
         <g:formRemote name="addCommentForm" url="[controller: 'commentable', action: 'add']" update="comments"
-                      after="post_comment()">
+                      after="post_comment()" before="add_rating()">
             <g:textArea id="commentBody" name="comment.body"/> <br/>
+            <g:hiddenField name="comment.stars" id="commentStars"/>
             <g:hiddenField name="update" value="comments"/>
             <g:hiddenField name="commentLink.commentRef" value="${commentable.id}"/>
             <g:hiddenField name="commentLink.type" value="${commentable.class.name}"/>
@@ -63,8 +62,13 @@
             post_comment();
         });
 
+        function add_rating() {
+            $('#commentStars').attr('value', $('#star_select').attr('value'))
+        }
+
         function post_comment() {
             $('#addCommentContainer').hide();
+            $('#addCommentContainer > div .star > span').removeClass('active');
         }
 
 

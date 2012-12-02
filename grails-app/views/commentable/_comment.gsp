@@ -14,7 +14,10 @@
     %{--</plugin:isAvailable>--}%
 
     <div class="commentDetails">
-        <strong>${comment?.poster}</strong> on  <g:formatDate format="MMM dd, yyyy" date="${comment.dateCreated}"/>
+        <% (6 - comment?.stars).times { %>
+        <span>&#9733;</span>
+        <% } %>
+        <strong>${comment?.poster}</strong> on  <g:formatDate format="MMM dd, yyyy" date="${comment?.dateCreated}"/>
     </div>
 
     <div class='commentBody'>
