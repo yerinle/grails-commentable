@@ -17,6 +17,7 @@ package org.grails.comments
 class Comment {
 
 	String body
+    Double stars
 	Date dateCreated
 	Date lastUpdated
 	Long posterId
