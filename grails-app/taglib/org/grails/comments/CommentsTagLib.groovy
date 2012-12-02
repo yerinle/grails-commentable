@@ -20,13 +20,6 @@ class CommentsTagLib {
 
     static namespace = "comments"
 
-    def resources = { attrs ->
-        out << """
-        <script type=\"text/javascript\" src=\"${resource(dir: pluginContextPath + '/js', file: 'comment_rating.js')}\"></script>
-        <link rel=\"stylesheet\" href=\"${createLinkTo(dir: pluginContextPath + '/css', file: 'comment_rating.css')}\" />
-        """
-    }
-
     def each = { attrs, body ->
         def bean = attrs.bean
         def varName = attrs.var ?: "comment"
